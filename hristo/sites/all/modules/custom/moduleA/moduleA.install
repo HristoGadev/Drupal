@@ -1,0 +1,103 @@
+<?php
+global $user;
+function moduleA_schema()
+{
+    $schema['user_loggin_counts'] = array(
+        'description' => 'Stores persons outline information. ',
+        'fields' => array(
+            'uid' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The user user's {menu_links}.id.",
+            ),
+            'loggin_count' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => "The user`s age {node}.age.",
+            ),
+        ),
+        'indexes' => array(
+            'uid' => array('uid'),
+        ),
+    );
+    return $schema;
+}
+
+/**function moduleA_install()
+{
+    $fields = array(
+        'id' => 1,
+        'age' => 18,
+        'bid' => 6,
+    );
+    db_insert(moduleA)
+        ->fields($fields)
+        ->execute();
+    $fields = array(
+        'id' => 2,
+        'age' => 10,
+        'bid' => 2,
+    );
+    db_insert(moduleA)
+        ->fields($fields)
+        ->execute();
+    $fields = array(
+        'id' => 3,
+        'age' => 12,
+        'bid' => 1,
+    );
+    db_insert(moduleA)
+        ->fields($fields)
+        ->execute();
+
+
+}
+
+//Not working
+function moduleA_update()
+{
+    db_add_field('moduleA', 'name', array(
+        'type' => 'varchar',
+        'length' => 12,
+        'not null' => true,
+        'default' => '',
+    ));
+    db_add_index('moduleA', 'name', array('name'));
+}*/
+
+function moduleA_page()
+{
+    global $user;
+    $account = user_load($user->uid);
+
+    return 'test';
+}
+function moduleA_user_login(&$edit, $account) {
+
+   db_merge('user_loggin_counts')
+       ->key(array(
+           'uid'=>$account->uid))
+       ->fields(array(
+           'uid'=>$account->uid,
+           'loggin_count'=>1,
+
+       ))
+       ->expression('loggin_count','loggin_count+1')
+       ->execute();
+
+
+}
+function moduleA_user_view_alter(&$build) {
+    // Check for the existence of a field added by another module.
+    if (isset($build['an_additional_field'])) {
+        // Change its weight.
+        $build['an_additional_field']['#weight'] = -10;
+    }
+
+    // Add a #post_render callback to act on the rendered HTML of the user.
+    $build['#post_render'][] = 'my_module_user_post_render';
+}

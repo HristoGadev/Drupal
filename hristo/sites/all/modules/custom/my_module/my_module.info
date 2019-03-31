@@ -1,0 +1,6 @@
+name = My Module
+description = My first module
+core = 7.x
+package = Education
+;files[]
+configure = admin/config/my-module

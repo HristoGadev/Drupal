@@ -1,0 +1,4 @@
+name=Latest content module
+core=7.x
+package=Education
+configure="admin/config/content/latest-content-config"

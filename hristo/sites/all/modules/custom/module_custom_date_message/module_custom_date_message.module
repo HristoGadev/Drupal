@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * Implement hook_menu().
+ */
+
+function module_custom_date_message_menu()
+{
+
+    $items['custom-date'] = array(
+        'title' => t('Display date'),
+        'description' => 'Display current day',
+        'page callback' => 'drupal_get_form',
+        'file' => 'includes/module_custom_date.inc',
+        'page arguments' => array('module_custom_date_settings_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['custom-date/advanced2'] = array(
+        'title' => t('Advanced2'),
+        'access callback' => TRUE,
+        'page callback' => 'moduleA_page',
+        'file' => 'custom/moduleA/moduleA.install',
+        'type' => MENU_DEFAULT_LOCAL_TASK,
+        'weight' => 3,
+    );
+    $items['custom-date/advanced'] = array(
+        'title' => t('Advanced'),
+        'access callback' => TRUE,
+        'page callback' => 'module_advanced_settings_form',
+        'file' => 'includes/module_advanced.admin.inc',
+        'type' => MENU_LOCAL_TASK,
+        'weight' => 1,
+    );
+    return $items;
+
+}
+
+function module_custom_date_message_permission()
+{
+    return array(
+        'administer module_custom_date_message' => array(
+            'title' => t('administer current date message'),
+            'description' => t('Perform administration tasks for module_custom_date_message.'),
+        ),
+    );
+}
+
+function current_date()
+{
+    return date('d/m/Y h:i:sa');
+}
+

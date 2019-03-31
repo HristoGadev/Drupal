@@ -1,0 +1,5 @@
+name = My moduleA
+description = Display dates
+core = 7.x
+package = Education
+configure = moduleA-page

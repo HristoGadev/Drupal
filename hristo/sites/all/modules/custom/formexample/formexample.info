@@ -1,0 +1,5 @@
+name = Form Example 
+description = Shows how to build a Drupal form
+package = Education
+core = 7.x 
+files[]=formexample.module

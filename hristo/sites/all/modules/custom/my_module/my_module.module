@@ -1,0 +1,73 @@
+<?php
+/**
+ * Implements hook_init().
+ */
+function my_module_init() {
+ $is_path_display_enabled=variable_get('my_module_enable_path_message',0);
+ $day_of_week=date('1');
+ $current_day_of_week=strtolower($day_of_week);
+ $day_of_week_settings=variable_get('my_module_select','friday');
+
+ if ($is_path_display_enabled == 1 && $current_day_of_week == $day_of_week_settings){
+   $path=current_path();
+   drupal_set_message('Your path is '.$path);
+   drupal_set_message('Today is: '.$current_day_of_week,'warning');
+ }
+}
+/**
+ * Implement hook_menu().
+ */
+function my_module_menu() {
+  $items['admin/config/my_module'] = array(
+    'title' => t('My module config page'),
+    'description'=>'Description of a setting page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('my_module_settings_form'),
+    'access callback' => 'my_module_access',
+    'type'=>MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+/**
+ * Config page callback for My module
+ */
+function my_module_settings_form(){
+  $form['my_module_enable_path_message'] = array(
+
+    '#type' => 'checkbox',
+    '#title' => t('Send me a copy.'),
+    '#default_value' => variable_get('my_module_enable_path_message',0),
+
+  );
+  $form['my_module_select']=array(
+    '#type'=>'select',
+    '#title'=>t('My select'),
+    '#options'=>array(
+      'monday'=>'Monday',
+      'tuesday'=>'Tuesday',
+      'wednesday'=>'Wednesday',
+      'thursday'=>'Thursday',
+      'friday'=>'Friday',
+      'saturday'=>'Saturday',
+      'sunday'=>'Sunday',
+    ),
+    '#default_value' => variable_get('my_module_select','friday'),
+  );
+  $form['annotate_deletion'] = array(
+    '#type' => 'radios',
+    '#title' => t('Annotations will be deleted'),
+    '#description' => t('Select a method for deleting annotations.'),
+    '#options' => array(
+      t('Never'),
+      t('Randomly'),
+      t('After 30 days'),
+    ));
+  return system_settings_form($form);
+}
+function my_module_access(){
+  global $user;
+  if($user){
+    return TRUE;
+  }
+  return FALSE;
+}

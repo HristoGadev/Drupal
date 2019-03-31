@@ -1,0 +1,64 @@
+<?php
+function moduleA_menu()
+{
+
+    $items['moduleA-page'] = [
+        'title' => t('ModuleA'),
+        'description' => 'Display data',
+        'page callback' => 'moduleA_page',
+        'file' => 'moduleA.install',
+        'page arguments' => ['moduleA_form'],
+        'access callback' => 'moduleA_access',
+        'type' => MENU_NORMAL_ITEM,
+    ];
+    return $items;
+}
+
+function moduleA_form()
+{
+    $form['moduleA_enable_date'] = array(
+
+        '#type' => 'checkbox',
+        '#title' => t('Enables/disables dates.'),
+        '#default_value' => variable_get('moduleA_enable_date', 0),
+
+    );
+    return system_settings_form($form);
+}
+
+function moduleA_permission()
+{
+    return array(
+        'administer moduleA' => array(
+            'title' => t('Administer moduleA'),
+            'description' => t('Perform administration tasks for moduleA.'),
+        ),
+    );
+}
+
+function moduleA_access()
+{
+    global $user;
+    if ($user) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function moduleA_form_alter(&$form, &$form_state, $form_id)
+{
+    if (!($form_id == 'user_register_form' || $form_id == 'user_profile_form')) {
+        return;
+    }
+    $form['accept_terms']= array(
+        '#type' => 'checkbox',
+        '#description' => t('By registering at %site-name, you agree that at any time, we (or our surly, brutish henchmen) may enter your place of residence and smash your belongings with a ball-peen hammer.',
+            array('%site-name' => variable_get('site_name', 0))),
+        '#default_value' => false,
+        '#title'=>t('I agree'),
+
+    );
+}

@@ -1,0 +1,22 @@
+<?php
+/**
+ * Implements hook_init().
+ */
+function module_custom_date_message_init() {
+  $is_date_enabled=variable_get('my_module_enable_date',0);
+  $options_choosen=variable_get('module_custom_date_select');
+
+  if ($is_date_enabled==1){
+    switch ($options_choosen){
+      case 'status':
+        drupal_set_message('Today is: '.current_date(),"$options_choosen");
+        break;
+      case 'warning':
+        drupal_set_message('Today is: '.current_date(),"$options_choosen");
+        break;
+      case 'error':
+        drupal_set_message('Today is: '.current_date(),"$options_choosen");
+        break;
+    }
+  }
+}

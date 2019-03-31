@@ -1,0 +1,78 @@
+<?php
+
+/**  * @file  * Play with the Form API.  */ 
+ 
+/**  * Implements hook_menu().  */
+function formexample_menu() {  
+    $items['formexample'] = array(   
+        'title' => 'View the sample form',  
+        'page callback' => 'drupal_get_form',   
+        'page arguments' => array('formexample_nameform'),  
+        'access callback' => TRUE,     'type' => MENU_NORMAL_ITEM  
+        );
+    return $items; 
+    
+} 
+ 
+/**  * Define a form.  */ 
+    function formexample_nameform() {  
+        $form['name'] = array(  
+            '#title' => t('Your Name'),  
+            '#type' => 'fieldset',
+            '#collapsible' => TRUE, 
+            '#collapsed' => TRUE,
+            '#description' => t('What people call you.')  
+            );  
+        $form['name']['user_name'] = array(  
+            '#title' => t('Your Name'),    
+            '#type' => 'textfield',   
+            '#description' => t('Please enter your name.') 
+            );  
+        $form['color'] = array( 
+                '#title' => t('Color'),   
+                '#type' => 'fieldset',   
+                '#description' => t('This fieldset contains the Color field.'),   
+                '#collapsible' => TRUE, 
+                '#collapsed' => TRUE, 
+            );  
+            $form['color_options'] = array(  
+                '#type' => 'value', 
+                '#value' => array(
+                    t('red'),
+                    t('green'),
+                    t('blue')) 
+                ); 
+           $form['color']['favorite_color'] = array( 
+                  '#title' => t('Favorite Color'),    
+                  '#type' => 'select',   
+                  '#description' => t('Please select your favorite color.'),   
+                  '#options' => $form['color_options']['#value'] 
+           ); 
+            $form['submit'] = array(   
+                  '#type' => 'submit',  
+                  '#value' => t('Submit')  
+                  );  
+              return $form; 
+              
+    }
+    
+ 
+/**  * Validate the form.  */
+     function formexample_nameform_validate($form, &$form_state) { 
+         if ($form_state['values']['user_name'] == 'King Kong') {  
+             // We notify the form API that this field has failed validation. 
+                 form_set_error('user_name',   
+                         t('King Kong is not allowed to use this form.')); 
+                 } 
+                
+           }
+ 
+function formexample_nameform_submit($form_id, $form_state) {  
+    $name = $form_state['values']['user_name'];
+    $color_key = $form_state['values']['favorite_color']; 
+    $color = $form_state['values']['color_options'][$color_key]; 
+ 
+  drupal_set_message(t('%name loves the color %color!', 
+          array('%name' => $name, '%color' => $color)));
+  } 
+             
