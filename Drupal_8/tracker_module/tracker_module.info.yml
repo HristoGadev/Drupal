@@ -1,0 +1,6 @@
+name: Action Tracker
+type: module
+description: 'Enables tracking of recent actions for users.'
+package: Custom
+core: 8.x
+

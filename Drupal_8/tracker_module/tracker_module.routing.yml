@@ -1,0 +1,15 @@
+tracker_module.content:
+  path: '/logs'
+  defaults:
+    _controller: '\Drupal\tracker_module\Controller\TrackerController::showActions'
+    _title: 'Logs'
+  requirements:
+    _permission: 'access content'
+
+tracker_module.node_content:
+  path: '/node/{cid}/edit'
+  defaults:
+    _form: '\Drupal\tracker_module\Controller\TrackerNodeController::trackNodes'
+    _title: 'Nodes activities'
+  requirements:
+    _permission: 'access content'

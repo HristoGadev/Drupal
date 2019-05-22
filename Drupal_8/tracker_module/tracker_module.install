@@ -1,0 +1,77 @@
+<?php /**
+ * Implements hook_schema().
+ */
+function tracker_module_schema()
+{
+    $schema['trackers'] = array(
+        'description' => 'Stores users actions information.',
+        'fields' => array(
+            'tid' => array(
+                'type' => 'serial',
+                'not null' => TRUE,
+                'description' => "The action id.",
+            ),
+            'uid' => array(
+                'type' => 'int',
+                'not null' => TRUE,
+                'description' => "The username id.",
+            ),
+            'name' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'description' => "The username.",
+            ),
+            'message' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'description' => "Description of users action",
+            ),
+            'date_action' => array(
+                'description' => t('Current time for the user action'),
+                'mysql_type' => 'timestamp',
+                'not null' => TRUE,
+            ),
+
+        ),
+        'primary key' => array('tid'),
+        'foreign key' => array('uid'),
+        'indexes' => array(
+            'message' => array('message'),
+            'date_action' => array('date_action'),
+        ),
+    );
+    $schema['trackers_nodes'] = array(
+        'description' => 'Stores nodes actions information.',
+        'fields' => array(
+            'aid' => array(
+                'type' => 'serial',
+                'not null' => TRUE,
+                'description' => "The action id.",
+            ),
+            'uid' => array(
+                'type' => 'int',
+                'not null' => TRUE,
+                'description' => "The username id.",
+            ),
+
+            'message' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'description' => "Description of users action",
+            ),
+            'date_action' => array(
+                'description' => t('Current time for the user action'),
+                'mysql_type' => 'timestamp',
+                'not null' => TRUE,
+            ),
+
+        ),
+        'primary key' => array('aid'),
+        'foreign key' => array('uid'),
+        'indexes' => array(
+            'message' => array('message'),
+            'date_action' => array('date_action'),
+        ),
+    );
+    return $schema;
+}
