@@ -1,0 +1,5 @@
+name: Login
+type: module
+description: Display form when a user register
+core: 8.x
+package: Custom

@@ -1,0 +1,32 @@
+<?php /**
+ * Implements hook_schema().
+ */
+function users_register_module_schema() {
+    $schema['users_registration'] = array(
+        'description' => 'Stores users information.',
+        'fields' => array(
+            'uid' => array(
+                'type' => 'serial',
+                'not null' => TRUE,
+                'description' => "The user id.",
+            ),
+            'name' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'description' => "The username.",
+            ),
+            'email' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'description' => "The user email.",
+            ),
+
+        ),
+        'primary key' => array('uid'),
+        'indexes' => array(
+            'name' => array('name'),
+            'email' => array('email'),
+        ),
+    );
+    return $schema;
+}

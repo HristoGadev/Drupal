@@ -1,0 +1,30 @@
+users_register_module.form:
+  path: '/login'
+  defaults:
+    _form: '\Drupal\users_register_module\Form\RegisterForm'
+    _title: 'User info'
+  requirements:
+    _permission: 'access content'
+
+users_register_module.content:
+  path: '/display'
+  defaults:
+    _controller: '\Drupal\users_register_module\Controller\UsersDisplay::showUsers'
+    _title: 'Users'
+  requirements:
+    _permission: 'access content'
+
+users_register_module.delete_form:
+  path: '/delete/{cid}'
+  defaults:
+    _form: '\Drupal\users_register_module\Form\DeleteForm'
+    _title: 'DeleteForm'
+  requirements:
+    _permission: 'access content'
+users_register_module.wellcome_content:
+  path: '/hello'
+  defaults:
+    _controller: 'Drupal\users_register_module\Controller\HelloController::content'
+    _title: 'Hello'
+  requirements:
+    _permission: 'access content'
