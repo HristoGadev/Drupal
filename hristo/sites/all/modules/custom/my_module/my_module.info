@@ -4,3 +4,56 @@ core = 7.x
 package = Education
 ;files[]
 configure = admin/config/my-module
+
+
+
+
+
+name = Students
+description = Students registration
+core=7.x
+package=Education
+configure=students
+
+<?php
+
+/**  * Implements hook_schema().  */
+function students_schema() {
+    $schema['students'] = array(
+        'description' => t('Stores information about giant students.'),
+        'fields' => array(
+            'sid' => array(
+                'type' => 'serial',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'description' => t("Primary key: A unique ID for each bunny."),
+            ),
+            'name' => array(
+                'type' => 'varchar',
+                'length' => 64,
+                'not null' => TRUE,
+                'description' => t("Each student gets a name."),
+            ),
+            'gender' => array(
+                'type' => 'varchar',
+                'length' => 6,
+                'not null' => TRUE,
+                'description' => t("Students gender."),
+            ),
+            'faculty_number' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'length'=>6,
+                'description' => t('The students faculty number.'),
+            ),
+        ),
+        'primary key' => array('sid'),
+        'indexes' => array(
+            'name' => array('name'),
+            'gender' => array('gender'),
+            'faculty_number' => array('faculty_number'),
+        ),
+    );
+    return $schema;
+}
