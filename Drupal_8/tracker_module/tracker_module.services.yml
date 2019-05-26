@@ -1,5 +1,5 @@
 services:
-  event_subscriber_demo.node.insert:
-    class: Drupal\tracker_module\EventSubscriber\NodeInsertDemoSubscriber
+  tracker_module.node.update:
+    class: Drupal\tracker_module\EventSubscriber\NodeUpdateSubscriber
     tags:
     - { name: 'event_subscriber' }

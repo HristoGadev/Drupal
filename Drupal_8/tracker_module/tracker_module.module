@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\event_subscriber_demo\Event\NodeUpdateEvents;
+use Drupal\tracker_module\Event\NodeUpdateEvent;
 
 /**
  * Implements hook_help().
@@ -31,7 +31,7 @@ function tracker_module_entity_presave(Drupal\Core\Entity\EntityInterface $entit
     // Dispatch the node insert demo event so that subscribers can act accordingly.
     $type=$entity->getEntityType()->id();
     if($type==='node'){
-        \Drupal::service('event_dispatcher')->dispatch(NodeUpdateEvents::DEMO_NODE_UPDATE, new NodeUpdateEvents($entity));
+        \Drupal::service('event_dispatcher')->dispatch(NodeUpdateEvent::DEMO_NODE_UPDATE, new NodeUpdateEvent($entity));
     }
 
 }

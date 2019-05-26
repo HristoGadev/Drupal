@@ -10,7 +10,7 @@ use Drupal\Core\Entity\EntityInterface;
  */
 class NodeUpdateEvent extends Event {
 
-  const DEMO_NODE_UPDATE = 'tracker_module.node.insert';
+  const DEMO_NODE_UPDATE = 'tracker_module.node.update';
 
   /**
    * Node entity.
