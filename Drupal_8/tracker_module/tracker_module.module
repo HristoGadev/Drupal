@@ -1,1 +1,37 @@
+<?php
 
+/**
+ * @file
+ * Contains event_subscriber_demo.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\event_subscriber_demo\Event\NodeUpdateEvents;
+
+/**
+ * Implements hook_help().
+ */
+function tracker_module_help($route_name, RouteMatchInterface $route_match) {
+    switch ($route_name) {
+        // Main module help for the event_subscriber_demo module.
+        case 'help.page.event_subscriber_demo':
+            $output = '';
+            $output .= '<h3>' . t('About') . '</h3>';
+            $output .= '<p>' . t('Demo of creating and subscribing to events') . '</p>';
+            return $output;
+
+        default:
+    }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function tracker_module_entity_presave(Drupal\Core\Entity\EntityInterface $entity) {
+    // Dispatch the node insert demo event so that subscribers can act accordingly.
+    $type=$entity->getEntityType()->id();
+    if($type==='node'){
+        \Drupal::service('event_dispatcher')->dispatch(NodeUpdateEvents::DEMO_NODE_UPDATE, new NodeUpdateEvents($entity));
+    }
+
+}

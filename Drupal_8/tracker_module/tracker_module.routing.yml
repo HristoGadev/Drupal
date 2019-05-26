@@ -7,9 +7,9 @@ tracker_module.content:
     _permission: 'access content'
 
 tracker_module.node_content:
-  path: '/node/{cid}/edit'
+  path: 'logs_nodes'
   defaults:
-    _form: '\Drupal\tracker_module\Controller\TrackerNodeController::trackNodes'
+    _controller: '\Drupal\tracker_module\Controller\TrackerNodeController::trackNodes'
     _title: 'Nodes activities'
   requirements:
     _permission: 'access content'

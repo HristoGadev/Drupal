@@ -11,10 +11,11 @@ namespace Drupal\tracker_module\Controller;
 
 use Drupal\Component\Utility\DiffArray;
 use Drupal\Core\Controller\ControllerBase;
-
-
-
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Field\FieldItemListInterface;
 use \Drupal\node\Entity\Node;
+use Drupal\views\Plugin\views\area\Entity;
 
 class TrackerNodeController extends ControllerBase
 {
@@ -23,16 +24,8 @@ class TrackerNodeController extends ControllerBase
     {
 
 
-        $currentNode=\Drupal::entityTypeManager()->getStorage('node')->load(2);
-        $array=array_keys(DiffArray::diffAssocRecursive($currentNode->toArray(), $currentNode->original->toArray()));
-
-
-
-
-
-
         $result = \Drupal::database()->select('trackers_nodes', 'n')
-            ->fields('n', array('name', 'message', 'date_action'))
+            ->fields('n', array('message', 'date_action'))
             ->execute()
             ->fetchAll();
 
@@ -40,11 +33,11 @@ class TrackerNodeController extends ControllerBase
         foreach ($result as $row => $content) {
 
             $rows[] = array(
-                'data' => array($content->name, $content->message, $content->date_action),
+                'data' => array( $content->message, $content->date_action),
             );
         }
 
-        $header = array('name', 'action', 'date');
+        $header = array('action', 'date');
         $output = array(
             '#theme' => 'table',
             '#header' => $header,

@@ -11,11 +11,7 @@ function tracker_module_schema()
                 'not null' => TRUE,
                 'description' => "The action id.",
             ),
-            'uid' => array(
-                'type' => 'int',
-                'not null' => TRUE,
-                'description' => "The username id.",
-            ),
+
             'name' => array(
                 'type' => 'varchar',
                 'length' => 255,
@@ -48,15 +44,9 @@ function tracker_module_schema()
                 'not null' => TRUE,
                 'description' => "The action id.",
             ),
-            'uid' => array(
-                'type' => 'int',
-                'not null' => TRUE,
-                'description' => "The username id.",
-            ),
 
             'message' => array(
-                'type' => 'varchar',
-                'length' => 255,
+                'type' => 'longtext',
                 'description' => "Description of users action",
             ),
             'date_action' => array(
@@ -67,7 +57,7 @@ function tracker_module_schema()
 
         ),
         'primary key' => array('aid'),
-        'foreign key' => array('uid'),
+
         'indexes' => array(
             'message' => array('message'),
             'date_action' => array('date_action'),
